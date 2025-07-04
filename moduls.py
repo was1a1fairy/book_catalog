@@ -9,3 +9,4 @@ def catalog_to_matrix():
     for string in file.readlines():
         matrix.append(string.split(","))
     return matrix
+
