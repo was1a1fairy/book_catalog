@@ -38,10 +38,16 @@ def date_create_catalog():
     print("04.07.2025")
 
 def print_catalog():
+    """"
+    вывод каталога на консоль
+    """
     for i in (moduls.catalog_to_matrix()):
         print(*i)
 
 def input_book():
+    """
+    добавление полной информации о книге в каталог
+    """
     name = message("введите название книги одной строкой", str)
     author = message("введите автора данной книги одной строкой", str)
     year = message("введите год издания данной книги целым числом", int)
