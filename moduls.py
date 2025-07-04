@@ -9,3 +9,7 @@ def catalog_to_matrix():
     for string in file.readlines():
         matrix.append(string.split(","))
     return matrix
+
+def open_catalog(mode: str):
+    file = open("book_catalog.txt", mode)
+    return file

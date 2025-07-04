@@ -6,8 +6,11 @@ def message(text:str, type) -> str:
 
     на выходе получаем данные от пользователя
     """
-    message = input(text)
-    moduls.check_input(message, type)
+    message = input(f"{text}, если вы не знаете, введите '-'")
+    if message!="-":
+        moduls.check_input(message, type)
+    else:
+        message = "неизвестно"
     return message
 
 def report(text: str):
@@ -26,7 +29,7 @@ def name_catalog():
     """
     возвращает название каталога
     """
-    print("book_catalog")
+    print(moduls.open_catalog("w").name)
 
 def date_create_catalog():
     """
@@ -37,3 +40,12 @@ def date_create_catalog():
 def print_catalog():
     for i in (moduls.catalog_to_matrix()):
         print(*i)
+
+def input_book():
+    name = message("введите название книги одной строкой", str)
+    author = message("введите автора данной книги одной строкой", str)
+    year = message("введите год издания данной книги целым числом", int)
+    genre = message("введите жанр данной книги одной строкой", str)
+    count = message("введите  количество экземпляров этой книги, имеющихся в наличии, целым числом", int)
+    moduls.open_catalog("w").write(name, author, year, genre, count)
+    report("книга добавлена успешно!")
