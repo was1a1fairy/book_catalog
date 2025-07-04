@@ -20,16 +20,20 @@ def count_books():
     """
     возвращает количество книг в каталоге
     """
-    return len(moduls.catalog_to_matrix())
+    print(len(moduls.catalog_to_matrix()))
 
 def name_catalog():
     """
     возвращает название каталога
     """
-    return "book_catalog"
+    print("book_catalog")
 
 def date_create_catalog():
     """
     возвращает дату создания каталога
     """
-    return "04.07.2025"
+    print("04.07.2025")
+
+def print_catalog():
+    for i in (moduls.catalog_to_matrix()):
+        print(*i)
