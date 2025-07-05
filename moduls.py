@@ -1,3 +1,6 @@
+import ui
+
+
 def check_input(data, type):
     """
     проверка типа входных данных,
@@ -7,19 +10,19 @@ def check_input(data, type):
     if isinstance(type, (int, float)):
         if data<=0: raise ValueError("число должно быть больше 0")
 
-def catalog_to_matrix():
+def catalog_to_matrix(path):
     """
     перевод информации из файла в матрицу
     """
-    file = open("book_catalog.txt", "r")
+    file = open_catalog(path, "r")
     matrix = []
     for string in file.readlines():
         matrix.append(string.split(","))
     return matrix
 
-def open_catalog(mode: str):
+def open_catalog(path, mode: str):
     """
     открытие файла в указанном в параметрах функции режиме
     """
-    file = open("book_catalog.txt", mode)
+    file = open(path, mode)
     return file
