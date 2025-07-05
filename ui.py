@@ -1,6 +1,6 @@
 import moduls
 
-def message(text:str, type) -> str:
+def message(text:str, type):
     """
     при вызове функции в параметры передаем text,
     с сообщением для пользователя
@@ -20,7 +20,7 @@ def report(text: str):
     """
     print(text)
 
-def count_books():
+def count_books(path):
     """
     возвращает количество книг в каталоге
     """
@@ -38,37 +38,9 @@ def date_create_catalog():
     """
     print("04.07.2025")
 
-def print_catalog():
+def print_catalog(path):
     """"
     вывод каталога на консоль
     """
     for i in (moduls.catalog_to_matrix(path)):
         print(*i)
-
-def input_book(path):
-    """
-    добавление полной информации о книге в каталог
-    """
-    name = message("введите название книги одной строкой", str)
-    author = message("введите автора данной книги одной строкой", str)
-    year = message("введите год издания данной книги целым числом", int)
-    genre = message("введите жанр данной книги одной строкой", str)
-    count = message("введите  количество экземпляров этой книги, имеющихся в наличии, целым числом", int)
-    moduls.open_catalog(path, "a").write(name, author, year, genre, count)
-    report("книга добавлена успешно!")
-
-def delete_book(path):
-    """
-    удаление книги из матрицы,
-    затем матрицу заново в файл
-    если clear не сработает
-    перебрать каталог через i и j
-    и удалить всё по индексам.
-    """
-    book = message("введите название книги, которую хотите удалить из каталога", str)
-    catalog = moduls.catalog_to_matrix(path)
-    for string in catalog:
-        if book in string:
-            string.clear()
-    moduls.open_catalog(path, "w").write(catalog)
-    report("книги больше нет в каталоге! или не было)))!")
