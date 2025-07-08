@@ -62,3 +62,24 @@ def menu():
         report("совершен выход из приложения")
         exit()
     return mess
+
+def core(path):
+    """
+    сценарий
+    """
+    mess = menu()
+    print(mess)
+    if mess == 1:
+        moduls.open_catalog(path, "w")
+        report("каталог создан!")
+    elif mess == 2:
+        moduls.input_book(path)
+    elif mess == 3:
+        print(moduls.catalog_to_matrix(path))
+    elif mess == 4:
+        moduls.delete_book(path)
+    elif mess == 5:
+        moduls.modify_book(path)
+    elif mess == 6:
+        date_create_catalog(), count_books(path), name_catalog(path)
+    else: raise ValueError("команда должна быть от 1 до 6, либо -")
