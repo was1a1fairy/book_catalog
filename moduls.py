@@ -1,4 +1,5 @@
 import ui
+import os
 
 
 def check_input(data, typee):
@@ -8,15 +9,27 @@ def check_input(data, typee):
     если число, то больше 0,
     перевод в int
     """
+
     if data.isdigit():
         data = int(data)
-        print(data)
 
     if not isinstance(data, typee): raise TypeError("введите правильный тип данных")
 
     if typee in (int, float):
         if data<=0: raise ValueError("число должно быть больше 0")
+
+    if typee == str and len(data)==0:
+        raise ValueError("введите непустую строку")
+
     return data
+
+def check_path(path):
+    if path == "no":
+        path = "book_catalog.txt"
+        ui.report("использовано автоматическое название каталога")
+    elif not os.path.isfile(path): raise ValueError("введите корректный путь, с расширением .txt")
+    return path
+
 
 def catalog_to_matrix(path):
 
@@ -28,9 +41,14 @@ def catalog_to_matrix(path):
     matrix = []
 
     for string in file.readlines():
-        matrix.append(string.split(","))
+        string.replace("\n", "")
+        matrix.append(string)
 
     return matrix
+
+
+def print_matrix(matrix):
+    print(*matrix)
 
 
 def open_catalog(path, mode: str):
@@ -86,9 +104,11 @@ def delete_book(path):
 
     for string in catalog:
         if book in string:
-            string.clear()
+            catalog.remove(string)
 
-    open_catalog(path, "w").write(catalog)
+    mass = open_catalog(path, "w")
+    for string in catalog:
+        mass.write(string)
     ui.report("книги больше нет в каталоге! или не было)))!")
 
 
@@ -106,12 +126,15 @@ def modify_book(path):
     note = choose_note(path, book)
     catalog = catalog_to_matrix(path)
 
+    if note == 3 or note == 5:
+        typee = int
+    else:
+        typee = str
+
     for string in catalog:
         if book in string:
-            string[note] = ui.message("введите выбранные вами данные для изменения",
-                                   [int if note==3 or note==5 else str])
-
-    ui.report("информация о книге успешно изменена")
+            string.split(",")[note] = ui.message("введите выбранные вами данные для изменения", typee)
+            ui.report("информация о книге успешно изменена")
 
 
 def choose_note(path, book):
@@ -127,15 +150,15 @@ def choose_note(path, book):
     for string in catalog:
         if book in string:
             note = ui.message(f"название: {book}. Если хотите его изменить, нажмите 1\n"
-                    f"автор: {string[2]}. Если хотите изменить, нажмите 2\n"
-                    f"год издания: {string[3]}. Если хотите изменить, нажмите 3\n"
-                    f"жанр: {string[4]}. Если хотите изменить, нажмите 4\n"
-                    f"количество книг в наличии: {string[5]}. Если хотите изменить, нажмите 5", int)
+                    f"автор: {string[1]}. Если хотите изменить, нажмите 2\n"
+                    f"год издания: {string[2]}. Если хотите изменить, нажмите 3\n"
+                    f"жанр: {string[3]}. Если хотите изменить, нажмите 4\n"
+                    f"количество книг в наличии: {string[4]}. Если хотите изменить, нажмите 5", int)
 
             if note >= 1 and note <= 5:
                 return note
 
-            elif note == "-":
+            elif note == "no":
                 ui.report("изменения не произошли")
                 return
 

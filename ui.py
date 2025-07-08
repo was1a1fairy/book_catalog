@@ -7,12 +7,9 @@ def message(text:str, typee):
 
     на выходе получаем данные от пользователя
     """
-    mess = input(f"{text}, если вы не знаете, введите '-'")
-    if mess != "-":
+    mess = input(f"{text}, если вы не знаете, введите 'no'")
+    if mess != "no":
         mess = moduls.check_input(mess, typee)
-        print(mess)
-    else:
-        mess = "неизвестно"
     return mess
 
 def report(text: str):
@@ -25,19 +22,19 @@ def count_books(path):
     """
     возвращает количество книг в каталоге
     """
-    print(len(moduls.catalog_to_matrix(path)))
+    return len(moduls.catalog_to_matrix(path))
 
 def name_catalog(path):
     """
     возвращает название каталога
     """
-    print(moduls.open_catalog(path, "w").name)
+    return moduls.open_catalog(path, "w").name
 
 def date_create_catalog():
     """
     возвращает дату создания каталога
     """
-    print("04.07.2025")
+    return "04.07.2025"
 
 def print_catalog(path):
     """"
@@ -57,8 +54,8 @@ def menu():
             f"4 - если хотите удалить книгу из каталога\n"
             f"5 - если хотите редактировать информацию о книге\n"
             f"6 - если хотите посмотреть информацию о каталоге\n"
-            f"- - если хотите выйти и завершить работу приложения", int)
-    if mess == "-":
+            f"no - если хотите выйти и завершить работу приложения -> ", int)
+    if mess == "no":
         report("совершен выход из приложения")
         exit()
     return mess
@@ -68,18 +65,30 @@ def core(path):
     сценарий
     """
     mess = menu()
-    print(mess)
+
     if mess == 1:
         moduls.open_catalog(path, "w")
         report("каталог создан!")
+
     elif mess == 2:
         moduls.input_book(path)
+
     elif mess == 3:
-        print(moduls.catalog_to_matrix(path))
+        moduls.print_matrix(moduls.catalog_to_matrix(path))
+
     elif mess == 4:
         moduls.delete_book(path)
+
     elif mess == 5:
         moduls.modify_book(path)
+
     elif mess == 6:
-        date_create_catalog(), count_books(path), name_catalog(path)
-    else: raise ValueError("команда должна быть от 1 до 6, либо -")
+        count = count_books(path)
+        data = date_create_catalog()
+        name = name_catalog(path)
+        report(f"Информация о каталоге:\n"
+               f"Дата создания: {data},\n"
+               f"Количество книг: {count},\n"
+               f"Имя каталога: {name}.")
+
+    else: raise ValueError("команда должна быть от 1 до 6, либо no")
