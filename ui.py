@@ -1,18 +1,19 @@
 import moduls
 
-def message(text:str, type):
+def message(text:str, typee):
     """
     при вызове функции в параметры передаем text,
     с сообщением для пользователя
 
     на выходе получаем данные от пользователя
     """
-    message = input(f"{text}, если вы не знаете, введите '-'")
-    if message!="-":
-        moduls.check_input(message, type)
+    mess = input(f"{text}, если вы не знаете, введите '-'")
+    if mess != "-":
+        mess = moduls.check_input(mess, typee)
+        print(mess)
     else:
-        message = "неизвестно"
-    return message
+        mess = "неизвестно"
+    return mess
 
 def report(text: str):
     """

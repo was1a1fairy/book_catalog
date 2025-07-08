@@ -1,18 +1,22 @@
 import ui
-from ui import report
 
 
-def check_input(data, type):
+def check_input(data, typee):
 
     """
     проверка типа входных данных,
-    если число, то больше 0
+    если число, то больше 0,
+    перевод в int
     """
+    if data.isdigit():
+        data = int(data)
+        print(data)
 
-    if not isinstance(data, type): raise TypeError("введите правильный тип данных")
+    if not isinstance(data, typee): raise TypeError("введите правильный тип данных")
 
-    if isinstance(type, (int, float)):
+    if typee in (int, float):
         if data<=0: raise ValueError("число должно быть больше 0")
+    return data
 
 def catalog_to_matrix(path):
 
@@ -58,8 +62,8 @@ def input_book(path):
     year = ui.message("введите год издания данной книги целым числом", int)
     genre = ui.message("введите жанр данной книги одной строкой", str)
     count = ui.message("введите  количество экземпляров этой книги, имеющихся в наличии, целым числом", int)
-
-    open_catalog(path, "a").write(name, author, year, genre, count)
+    string = f"{name}, {author}, {year}, {genre}, {count}"
+    open_catalog(path, "a").write(string)
     ui.report("книга добавлена успешно!")
 
 
