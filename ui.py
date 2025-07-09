@@ -7,7 +7,7 @@ def message(text:str, typee):
 
     на выходе получаем данные от пользователя
     """
-    mess = input(f"{text}, если вы не знаете, введите 'no' -> ")
+    mess = input(f"{text},\n если вы не знаете, введите 'no' -> ")
     if mess != "no":
         mess = moduls.check_input(mess, typee)
     return mess
