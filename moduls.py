@@ -115,10 +115,15 @@ def delete_book(path):
         if book in string:
             catalog.remove(string)
 
+    catalog_to_file(path, catalog)
+    ui.report("книги больше нет в каталоге! или не было)))!")
+
+
+def catalog_to_file(path, catalog):
+
     mass = open_catalog(path, "w")
     for string in catalog:
         mass.write(string)
-    ui.report("книги больше нет в каталоге! или не было)))!")
 
 
 def modify_book(path):
@@ -137,13 +142,17 @@ def modify_book(path):
 
     if note == 3 or note == 5:
         typee = int
+    elif note == 6:
+        return 6
     else:
         typee = str
 
     for string in catalog:
         if book in string:
-            string.split(",")[note] = ui.message("введите выбранные вами данные для изменения", typee)
+            string.split(",")[note-1] = ui.message("введите выбранные вами данные для изменения", typee)
             ui.report("информация о книге успешно изменена")
+
+    catalog_to_file(path, catalog)
 
 
 def choose_note(path, book):
@@ -158,18 +167,19 @@ def choose_note(path, book):
 
     for string in catalog:
         if book in string:
+            array = string.split(",")
             note = ui.message(f"название: {book}. Если хотите его изменить, нажмите 1\n"
-                    f"автор: {string[1]}. Если хотите изменить, нажмите 2\n"
-                    f"год издания: {string[2]}. Если хотите изменить, нажмите 3\n"
-                    f"жанр: {string[3]}. Если хотите изменить, нажмите 4\n"
-                    f"количество книг в наличии: {string[4]}. Если хотите изменить, нажмите 5", int)
+                    f"автор:{array[1]}. Если хотите изменить, нажмите 2\n"
+                    f"год издания:{array[2]}. Если хотите изменить, нажмите 3\n"
+                    f"жанр:{array[3]}. Если хотите изменить, нажмите 4\n"
+                    f"количество книг в наличии:{array[4].replace("\n", "")}. Если хотите изменить, нажмите 5", int)
 
-            if note >= 1 and note <= 5:
-                return note
-
-            elif note == "no":
+            if note == "no":
                 ui.report("изменения не произошли")
-                return
+                return 6
+
+            elif note >= 1 and note <= 5:
+                return note
 
             raise ValueError("введите значение от 1 до 5!")
 
