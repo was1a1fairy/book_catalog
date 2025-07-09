@@ -85,6 +85,11 @@ def input_book(path):
     ui.report("книга добавлена успешно!")
 
 
+def is_no():
+    """
+    """
+
+
 def delete_book(path):
 
     """
