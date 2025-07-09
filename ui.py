@@ -37,7 +37,10 @@ def date_create_catalog():
     return "04.07.2025"
 
 
-def print_array(array):
+def print_array(array, path):
+    if moduls.is_empty(path):
+        report("каталог пуст, сначала добавьте книги")
+        return
     print(*array)
 
 
@@ -72,7 +75,7 @@ def core(path):
         moduls.input_book(path)
 
     elif mess == 3:
-        print_array(moduls.catalog_to_array(path))
+        print_array(moduls.catalog_to_array(path), path)
 
     elif mess == 4:
         moduls.delete_book(path)
