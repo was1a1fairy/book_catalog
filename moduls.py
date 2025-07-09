@@ -81,14 +81,18 @@ def input_book(path):
     genre = ui.message("введите жанр данной книги одной строкой", str)
     count = ui.message("введите  количество экземпляров этой книги, имеющихся в наличии, целым числом", int)
     string = f"{name}, {author}, {year}, {genre}, {count}"
-    open_catalog(path, "a").write(string)
-    ui.report("книга добавлена успешно!")
+    if is_no(string):
+        ui.report("узнайте о книге хоть что-нибудь, а потом добавим")
+    else:
+        open_catalog(path, "a").write(string)
+        ui.report("книга добавлена успешно!")
 
 
-def is_no():
+def is_no(string: str):
     """
+    проверяет, не ввел ли пользователь no на всю инфу о книге
     """
-
+    return string.count("no") == 5
 
 def delete_book(path):
 
