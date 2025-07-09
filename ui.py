@@ -22,7 +22,7 @@ def count_books(path):
     """
     возвращает количество книг в каталоге
     """
-    return len(moduls.catalog_to_matrix(path))
+    return len(moduls.catalog_to_array(path))
 
 def name_catalog(path):
     """
@@ -37,8 +37,8 @@ def date_create_catalog():
     return "04.07.2025"
 
 
-def print_matrix(matrix):
-    print(*matrix)
+def print_array(array):
+    print(*array)
 
 
 def menu():
@@ -72,7 +72,7 @@ def core(path):
         moduls.input_book(path)
 
     elif mess == 3:
-        print_matrix(moduls.catalog_to_matrix(path))
+        print_array(moduls.catalog_to_array(path))
 
     elif mess == 4:
         moduls.delete_book(path)

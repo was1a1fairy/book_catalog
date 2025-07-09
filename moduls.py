@@ -25,7 +25,7 @@ def check_input(data, typee):
 
 def check_path(path):
     """
-
+    проверяет путь, введено ли расширение
     """
     if path == "no":
         path = "book_catalog.txt"
@@ -34,20 +34,20 @@ def check_path(path):
     return path
 
 
-def catalog_to_matrix(path):
+def catalog_to_array(path):
 
     """
-    перевод информации из файла в матрицу
+    перевод информации из файла в массив
     """
 
     file = open_catalog(path, "r")
-    matrix = []
+    array = []
 
     for string in file.readlines():
         string.replace("\n", "")
-        matrix.append(string)
+        array.append(string)
 
-    return matrix
+    return array
 
 
 def open_catalog(path, mode: str):
@@ -96,8 +96,8 @@ def is_no(string: str):
 def delete_book(path):
 
     """
-    удаление книги из матрицы,
-    затем матрицу заново в файл
+    удаление книги из массива,
+    затем массив заново в файл
     """
 
     if is_empty(path):
@@ -105,7 +105,7 @@ def delete_book(path):
         return
 
     book = ui.message("введите название книги, которую хотите удалить из каталога", str)
-    catalog = catalog_to_matrix(path)
+    catalog = catalog_to_array(path)
 
     for string in catalog:
         if book in string:
@@ -134,7 +134,7 @@ def modify_book(path):
 
     book = ui.message("введите название книги, которую хотите изменить", str)
     note = choose_note(path, book)
-    catalog = catalog_to_matrix(path)
+    catalog = catalog_to_array(path)
 
     if note == 3 or note == 5:
         typee = int
@@ -159,7 +159,7 @@ def choose_note(path, book):
     если пользователь передумал и ввел "-", выход.
     """
 
-    catalog = catalog_to_matrix(path)
+    catalog = catalog_to_array(path)
 
     for string in catalog:
         if book in string:
