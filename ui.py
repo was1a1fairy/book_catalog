@@ -1,53 +1,73 @@
 import moduls
 
 def message(text:str, typee):
+
     """
     при вызове функции в параметры передаем text,
     с сообщением для пользователя
 
     на выходе получаем данные от пользователя
     """
+
     mess = input(f"{text},\nесли вы не знаете, введите 'no' \033[1;32m->\033[0m ")
+
     if mess != "no":
         mess = moduls.check_input(mess, typee)
+
     return mess
 
+
 def report(text: str):
+
     """
     возвращает пользователю сообщение на консоль
     """
+
     print(f"\033[4m{text}\033[0m")
 
-def count_books(path):
+
+def count_books(path: str) -> int:
+
     """
     возвращает количество книг в каталоге
     """
+
     return len(moduls.catalog_to_array(path))
 
-def name_catalog(path):
+
+def name_catalog(path: str) -> str:
+
     """
     возвращает название каталога
     """
+
     return moduls.open_catalog(path, "w").name
 
-def date_create_catalog():
+
+def date_create_catalog() -> str:
+
     """
     возвращает дату создания каталога
     """
+
     return "04.07.2025"
 
 
-def print_array(array, path):
+def print_array(array: list, path: str):
+
     if moduls.is_empty(path):
         report("каталог пуст, сначала добавьте книги")
         return
+
     print(*array)
 
 
-def menu():
+def menu() -> str:
+
     """
     основное меню, которое будет видеть пользователь
     """
+
     mess = message(f"\033[1;32mНажмите:\033[0m\n"
             f"\033[1;32m1\033[0m - если хотите создать каталог(или очистить его)\n"
             f"\033[1;32m2\033[0m - если хотите добавить книгу и информацию о ней\n"
@@ -56,15 +76,20 @@ def menu():
             f"\033[1;32m5\033[0m - если хотите редактировать информацию о книге\n"
             f"\033[1;32m6\033[0m - если хотите посмотреть информацию о каталоге\n"
             f"\033[1;32mno\033[0m - если хотите выйти и завершить работу приложения", int)
+
     if mess == "no":
         report("совершен выход из приложения")
         exit()
+
     return mess
 
+
 def core(path):
+
     """
     сценарий
     """
+
     mess = menu()
 
     if mess == 1:
