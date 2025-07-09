@@ -23,18 +23,23 @@ def check_input(data, typee):
 
     return data
 
-def check_path(path):
+
+def check_path(path: str) -> str:
+
     """
     проверяет путь, введено ли расширение
     """
+
     if path == "no":
         path = "book_catalog.txt"
         ui.report("использовано автоматическое название каталога")
+
     elif not os.path.isfile(path): raise ValueError("введите корректный путь, с расширением .txt")
+
     return path
 
 
-def catalog_to_array(path):
+def catalog_to_array(path: str) -> list:
 
     """
     перевод информации из файла в массив
@@ -50,7 +55,7 @@ def catalog_to_array(path):
     return array
 
 
-def open_catalog(path, mode: str):
+def open_catalog(path: str, mode: str):
 
     """
     открытие файла в указанном в параметрах функции режиме
@@ -60,14 +65,16 @@ def open_catalog(path, mode: str):
     return file
 
 
-def is_empty(path) -> bool:
+def is_empty(path: str) -> bool:
+
     """
     пустой ли каталог
     """
+
     return open_catalog(path, "r").read() == ""
 
 
-def input_book(path):
+def input_book(path: str):
 
     """
     добавление полной информации о книге в каталог
@@ -78,22 +85,27 @@ def input_book(path):
     year = ui.message("введите год издания данной книги целым числом", int)
     genre = ui.message("введите жанр данной книги одной строкой", str)
     count = ui.message("введите  количество экземпляров этой книги, имеющихся в наличии, целым числом", int)
+
     string = f"{name}, {author}, {year}, {genre}, {count}"
+
     if is_no(string):
         ui.report("узнайте о книге хоть что-нибудь, а потом добавим")
+
     else:
         open_catalog(path, "a").write(string)
         ui.report("книга добавлена успешно!")
 
 
-def is_no(string: str):
+def is_no(string: str) -> bool:
+
     """
     проверяет, не ввел ли пользователь no на всю инфу о книге
     """
+
     return string.count("no") == 5
 
 
-def delete_book(path):
+def delete_book(path: str):
 
     """
     удаление книги из массива,
@@ -115,14 +127,18 @@ def delete_book(path):
     ui.report("книги больше нет в каталоге! или не было)))!")
 
 
-def catalog_to_file(path, catalog):
+def catalog_to_file(path: str, catalog: list) -> None:
+    """
+    переводит массив данных в файл(каталог)
+    """
 
     mass = open_catalog(path, "w")
+
     for string in catalog:
         mass.write(string)
 
 
-def modify_book(path):
+def modify_book(path: str):
 
     """
     замена инфы о книге
@@ -138,8 +154,7 @@ def modify_book(path):
 
     if note == 3 or note == 5:
         typee = int
-    elif note == 6:
-        return 6
+
     else:
         typee = str
 
@@ -151,7 +166,7 @@ def modify_book(path):
     catalog_to_file(path, catalog)
 
 
-def choose_note(path, book):
+def choose_note(path: str, book: str) -> int:
 
     """
     для функции modify_book
@@ -162,6 +177,7 @@ def choose_note(path, book):
     catalog = catalog_to_array(path)
 
     for string in catalog:
+
         if book in string:
             array = string.split(",")
             note = ui.message(f"название: {book}. Если хотите его изменить, нажмите 1\n"
@@ -172,7 +188,7 @@ def choose_note(path, book):
 
             if note == "no":
                 ui.report("изменения не произошли")
-                return 6
+                return
 
             elif note >= 1 and note <= 5:
                 return note
