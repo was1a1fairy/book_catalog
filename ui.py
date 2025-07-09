@@ -36,12 +36,10 @@ def date_create_catalog():
     """
     return "04.07.2025"
 
-def print_catalog(path):
-    """"
-    вывод каталога на консоль
-    """
-    for i in (moduls.catalog_to_matrix(path)):
-        print(*i)
+
+def print_matrix(matrix):
+    print(*matrix)
+
 
 def menu():
     """
@@ -74,7 +72,7 @@ def core(path):
         moduls.input_book(path)
 
     elif mess == 3:
-        moduls.print_matrix(moduls.catalog_to_matrix(path))
+        print_matrix(moduls.catalog_to_matrix(path))
 
     elif mess == 4:
         moduls.delete_book(path)

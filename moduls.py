@@ -24,6 +24,9 @@ def check_input(data, typee):
     return data
 
 def check_path(path):
+    """
+
+    """
     if path == "no":
         path = "book_catalog.txt"
         ui.report("использовано автоматическое название каталога")
@@ -47,10 +50,6 @@ def catalog_to_matrix(path):
     return matrix
 
 
-def print_matrix(matrix):
-    print(*matrix)
-
-
 def open_catalog(path, mode: str):
 
     """
@@ -62,11 +61,10 @@ def open_catalog(path, mode: str):
 
 
 def is_empty(path) -> bool:
-
-    if open_catalog(path, "r").read() == "":
-        return True
-
-    return False
+    """
+    пустой ли каталог
+    """
+    return open_catalog(path, "r").read() == ""
 
 
 def input_book(path):
@@ -94,14 +92,12 @@ def is_no(string: str):
     """
     return string.count("no") == 5
 
+
 def delete_book(path):
 
     """
     удаление книги из матрицы,
     затем матрицу заново в файл
-    если clear не сработает
-    перебрать каталог через i и j
-    и удалить всё по индексам.
     """
 
     if is_empty(path):
