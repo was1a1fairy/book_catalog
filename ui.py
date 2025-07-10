@@ -1,4 +1,6 @@
 import moduls
+import os
+import time
 
 def message(text:str, typee):
 
@@ -44,13 +46,12 @@ def name_catalog(path: str) -> str:
     return moduls.open_catalog(path, "w").name
 
 
-def date_create_catalog() -> str:
+def date_create_catalog(path) -> str:
 
     """
     возвращает дату создания каталога
     """
-
-    return "04.07.2025"
+    return time.ctime(os.path.getctime(path))
 
 
 def print_array(array: list, path: str):
@@ -110,7 +111,7 @@ def core(path):
 
     elif mess == 6:
         count = count_books(path)
-        data = date_create_catalog()
+        data = date_create_catalog(path)
         name = name_catalog(path)
         report(f"\033[1;32mИнформация о каталоге:\033[0m\n"
                f"Дата создания: {data},\n"
