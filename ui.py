@@ -2,6 +2,7 @@ import moduls
 import os
 import time
 
+
 def message(text:str, typee):
 
     """
