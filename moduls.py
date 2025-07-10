@@ -86,7 +86,7 @@ def input_book(path: str):
     genre = ui.message("введите жанр данной книги одной строкой", str)
     count = ui.message("введите  количество экземпляров этой книги, имеющихся в наличии, целым числом", int)
 
-    string = f"{name}, {author}, {year}, {genre}, {count}"
+    string = f"{name}, {author}, {year}, {genre}, {count}\n"
 
     if is_no(string):
         ui.report("узнайте о книге хоть что-нибудь, а потом добавим")
@@ -128,6 +128,7 @@ def delete_book(path: str):
 
 
 def catalog_to_file(path: str, catalog: list) -> None:
+
     """
     переводит массив данных в файл(каталог)
     """
@@ -155,18 +156,24 @@ def modify_book(path: str):
     if note == 3 or note == 5:
         typee = int
 
+    if note == 6:
+        return
     else:
         typee = str
 
     for string in catalog:
         if book in string:
-            string.split(",")[note-1] = ui.message("введите выбранные вами данные для изменения", typee)
+            elem = (string.split(","))[note-1]
+            new_string = string.replace(elem, f" {ui.message("введите выбранные вами данные для изменения", typee)}")
             ui.report("информация о книге успешно изменена")
+            catalog.remove(string)
+            catalog.append(new_string)
 
+    print(catalog)
     catalog_to_file(path, catalog)
 
 
-def choose_note(path: str, book: str) -> int:
+def choose_note(path: str, book: str) -> int or None:
 
     """
     для функции modify_book
@@ -180,15 +187,15 @@ def choose_note(path: str, book: str) -> int:
 
         if book in string:
             array = string.split(",")
-            note = ui.message(f"название: {book}. Если хотите его изменить, нажмите 1\n"
-                    f"автор:{array[1]}. Если хотите изменить, нажмите 2\n"
-                    f"год издания:{array[2]}. Если хотите изменить, нажмите 3\n"
-                    f"жанр:{array[3]}. Если хотите изменить, нажмите 4\n"
-                    f"количество книг в наличии:{array[4].replace("\n", "")}. Если хотите изменить, нажмите 5", int)
+            note = ui.message(f"\033[1mназвание:\033[0m {book}. \033[1mЕсли хотите его изменить, нажмите 1\033[0m\n"
+                    f"\033[1mавтор:\033[0m{array[1]}. \033[1mЕсли хотите изменить, нажмите 2\033[0m\n"
+                    f"\033[1mгод издания:\033[0m{array[2]}. \033[1mЕсли хотите изменить, нажмите 3\033[0m\n"
+                    f"\033[1mжанр:\033[0m{array[3]}. \033[1mЕсли хотите изменить, нажмите 4\033[0m\n"
+                    f"\033[1mколичество книг в наличии:\033[0m{array[4].replace("\n", "")}. \033[1mЕсли хотите изменить, нажмите 5\033[0m", int)
 
             if note == "no":
                 ui.report("изменения не произошли")
-                return
+                return 6
 
             elif note >= 1 and note <= 5:
                 return note
